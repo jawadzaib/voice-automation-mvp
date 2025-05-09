@@ -1,98 +1,202 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Voice Automation MVP
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A voice automation MVP designed to eliminate the need for medical office staff to wait on hold during insurance verification calls.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- Automated IVR navigation using AI
+- Human detection and staff notification
+- Call logging and status tracking
+- Webhook integration with n8n
+- Dockerized deployment
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Prerequisites
 
-## Project setup
+- Node.js 18 or higher
+- Docker and Docker Compose
+- Telnyx account and API credentials
+- Google Gemini API key
+- n8n instance for webhook handling
 
-```bash
-$ yarn install
+## Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+PORT=3003
+NODE_ENV=development
+
+# Telnyx Configuration
+TELNYX_API_KEY=your_telnyx_api_key
+TELNYX_CONNECTION_ID=your_connection_id
+
+# Google Gemini Configuration
+GEMINI_API_KEY=your_gemini_api_key
+
+# Webhook URLs
+N8N_WEBHOOK_URL=http://your-n8n-webhook-url
+HUMAN_DETECTED_WEBHOOK_URL=http://your-human-detected-webhook-url
+CALL_COMPLETED_WEBHOOK_URL=http://your-call-completed-webhook-url
+
+# Call Configuration
+MAX_CALL_DURATION=3600
+MAX_WAIT_FOR_STAFF=300
 ```
 
-## Compile and run the project
+## Installation
 
+1. Clone the repository:
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+git clone <repository-url>
+cd insurance-verification-assistant
 ```
 
-## Run tests
-
+2. Install dependencies:
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+npm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+3. Build the application:
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+npm run build
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Running the Application
 
-## Resources
+### Development Mode
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+npm run dev
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Production Mode
 
-## Support
+```bash
+npm start
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Using Docker
 
-## Stay in touch
+1. Build and start the container:
+```bash
+docker-compose up --build
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+2. To run in detached mode:
+```bash
+docker-compose up -d
+```
+
+## API Endpoints
+
+### Start a Call
+```
+POST /api/call/start
+```
+Request body:
+```json
+{
+  "office_id": "office_xyz",
+  "patient_ref": "case789",
+  "insurance_phone_number": "+18885551234",
+  "insurance_name": "Aetna"
+}
+```
+
+### Handle IVR Response
+```
+POST /api/call/ivr
+```
+Request body:
+```json
+{
+  "call_id": "call_123",
+  "audio_data": "IVR response text"
+}
+```
+
+### End Call
+```
+POST /api/call/end
+```
+Request body:
+```json
+{
+  "call_id": "call_123",
+  "status": "completed",
+  "notes": "Call completed successfully"
+}
+```
+
+### Receive Events from Telnyx
+```
+POST /api/call/events
+```
+Request body:
+```json
+{
+  "data": {
+    "event_type": "call.transcription.received",
+    "payload": {
+      "call_control_id": "call_123",
+      "transcription": {
+        "text": "Hello are you human"
+      },
+      "client_state": "received"
+    }
+  }
+}
+```
+
+### Health Check
+```
+GET /health
+```
+
+## Webhook Payloads
+
+### Human Detected
+```json
+{
+  "call_id": "abc123",
+  "timestamp": "2025-05-03T14:00:00Z",
+  "office_id": "office_xyz",
+  "patient_ref": "case789",
+  "join_link": "tel:+18885551234,,123456#",
+  "notes": "Live person detected, ready to transfer"
+}
+```
+
+### Call Completed
+```json
+{
+  "call_id": "abc123",
+  "timestamp_start": "2025-05-03T14:00:00Z",
+  "timestamp_end": "2025-05-03T14:33:15Z",
+  "duration_seconds": 1995,
+  "office_id": "office_xyz",
+  "patient_ref": "case789",
+  "status": "completed",
+  "staff_join_timestamp": "2025-05-03T14:31:00Z",
+  "seconds_waiting_for_staff": 135,
+  "notes": "Call completed successfully, transferred to staff."
+}
+```
+
+## Logging
+
+Logs are stored in the `logs` directory:
+- `error.log`: Error-level logs
+- `combined.log`: All logs
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+ISC 

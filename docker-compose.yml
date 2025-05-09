@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=production
+      - PORT=3003
+      - TELNYX_API_KEY=${TELNYX_API_KEY}
+      - TELNYX_CONNECTION_ID=${TELNYX_CONNECTION_ID}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL}
+      - HUMAN_DETECTED_WEBHOOK_URL=${HUMAN_DETECTED_WEBHOOK_URL}
+      - CALL_COMPLETED_WEBHOOK_URL=${CALL_COMPLETED_WEBHOOK_URL}
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped 
