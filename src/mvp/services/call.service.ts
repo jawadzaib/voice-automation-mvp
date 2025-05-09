@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
-import { config } from 'src/config/call.config';
+import { config } from '../../config/call.config';
 import {
   CallStatus,
   CallStatusType,
   HumanDetectedPayload,
   TelnyxCallResponse,
 } from 'src/types';
-import { logger } from 'src/utils/logger';
+import { logger } from '../../utils/logger';
 import { CallRequestDto } from '../dto/call-request.dto';
 
 @Injectable()

@@ -7,7 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { CallStatusType } from 'src/types';
-import { logger } from 'src/utils/logger';
+import { logger } from '../../utils/logger';
 import { CallEndDto } from '../dto/call-end.dto';
 import { CallEventDto } from '../dto/call-event.dto';
 import { CallRequestDto } from '../dto/call-request.dto';
@@ -96,8 +96,20 @@ export class WebhookController {
     // Handle key events
     switch (eventType) {
       case 'call.transcription.received':
-        if (transcriptionText)
-          await this.callService.handleIVRResponse(callId, transcriptionText);
+        if (transcriptionText) {
+          try {
+            await this.callService.handleIVRResponse(callId, transcriptionText);
+          } catch (error) {
+            await logger.error(
+              this.constructor.name,
+              `Transcription handler failed: ${error}`,
+            );
+            throw new HttpException(
+              'Internal Server Error',
+              HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+          }
+        }
         break;
       case 'call.hangup':
       case 'call.ended':

@@ -86,13 +86,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn run lint",
-      "prepare-commit-msg": "exec < /dev/tty && npx git-cz --hook || true",
-      "commit-msg": "commitlint --edit ${1}",
-      "pre-push": "yarn run test:changes"
-    }
   }
 }
