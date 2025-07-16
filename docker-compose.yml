@@ -3,6 +3,7 @@ version: '3.8'
 services:
   app:
     build: .
+    container_name: mvp_app
     ports:
       - "3003:3003"
     environment:
@@ -16,4 +17,19 @@ services:
       - CALL_COMPLETED_WEBHOOK_URL=${CALL_COMPLETED_WEBHOOK_URL}
     volumes:
       - ./logs:/app/logs
-    restart: unless-stopped 
+    restart: unless-stopped
+  postgres:
+    image: postgres:15
+    container_name: mvp_db
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: mvp
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
